@@ -1,5 +1,5 @@
 {
-  "name": "api-gateway",
+  "name": "test-gateway",
   "version": "1.0.0",
   "description": "The MDS Week 4 API Gateway",
   "main": "index.js",
@@ -11,5 +11,14 @@
   "license": "MIT",
   "dependencies": {
     "express-gateway": "^1.16.11"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamkristen/api-gateway.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iamkristen/api-gateway/issues"
+  },
+  "homepage": "https://github.com/iamkristen/api-gateway#readme"
 }

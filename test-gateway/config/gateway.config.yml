@@ -1,0 +1,110 @@
+http:
+  port: 8080
+
+admin:
+  port: 9876
+  host: localhost
+
+apiEndpoints:
+  api:
+    host: localhost
+    paths: 
+      - '/ip'
+  seismicData:
+    host: localhost
+    paths: 
+      - '/seismic/*'
+  dayLightData:
+    host: localhost
+    paths: 
+      - '/daylight/*'
+  issNowData:
+    host: localhost
+    paths: 
+      - '/iss-now/*'
+  astrosData:
+    host: localhost
+    paths: 
+      - '/astros/*'
+
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+  seismic:
+    url: 'https://65ca483b3b05d29307e01640.mockapi.io/api'
+  dayLight:
+    url: 'https://65ca483b3b05d29307e01640.mockapi.io/api'
+  issNow:
+    url: 'http://api.open-notify.org'
+  astros:
+    url: 'http://api.open-notify.org'
+
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+
+pipelines:
+  default:
+    apiEndpoints:
+      - api
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - proxy:
+          action:
+            serviceEndpoint: httpbin
+            changeOrigin: true
+
+  seismic:
+    apiEndpoints:
+      - seismicData
+    policies:
+      - log:
+          action:
+            message: '${req.method} ${req.originalUrl}'
+      - proxy:
+          action:
+            serviceEndpoint: seismic
+            changeOrigin: true
+
+  daylight:
+    apiEndpoints:
+      - dayLightData
+    policies:
+      - log:
+          action:
+            message: '${req.method} ${req.originalUrl}'
+      - proxy:
+          action:
+            serviceEndpoint: dayLight
+            changeOrigin: true
+
+  issNow:
+    apiEndpoints:
+      - issNowData
+    policies:
+      - log:
+          action:
+            message: '${req.method} ${req.originalUrl}'
+      - proxy:
+          action:
+            serviceEndpoint: issNow
+            changeOrigin: true
+
+  astros:
+    apiEndpoints:
+      - astrosData
+    policies:
+      - log:
+          action:
+            message: '${req.method} ${req.originalUrl}'
+      - proxy:
+          action:
+            serviceEndpoint: astros
+            changeOrigin: true
